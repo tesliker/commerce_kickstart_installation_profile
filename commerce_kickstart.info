@@ -90,6 +90,16 @@ dependencies[] = superfish
 dependencies[] = responsive_menus
 dependencies[] = adaptive_image
 dependencies[] = block_class
+dependencies[] = token
+dependencies[] = pathauto
+dependencies[] = imce
+dependencies[] = imce_wysiwyg
+
+
+; Install features
+dependencies[] = front_page_slideshow
+dependencies[] = disto
+dependencies[] = install_contexts
 
 files[] = commerce_kickstart.profile
 
