@@ -18,7 +18,7 @@ dependencies[] = admin_menu_toolbar
 ; Install necessary core modules.
 dependencies[] = block
 dependencies[] = color
-dependencies[] = comment
+; dependencies[] = comment
 dependencies[] = contextual
 dependencies[] = dashboard
 dependencies[] = help
@@ -71,41 +71,72 @@ dependencies[] = commerce_tax
 dependencies[] = commerce_tax_ui
 
 ; Install contribs.
+dependencies[] = adaptive_image
 dependencies[] = adminrole
+dependencies[] = block_class
+dependencies[] = imce
+dependencies[] = imce_wysiwyg
 dependencies[] = jquery_update
 dependencies[] = module_filter
+dependencies[] = pathauto
+dependencies[] = responsive_menus
+dependencies[] = superfish
+dependencies[] = token
 dependencies[] = transliteration
+dependencies[] = views_responsive_grid
+dependencies[] = webform
+dependencies[] = wysiwyg
+dependencies[] = seo_checklist
+dependencies[] = xmlsitemap
+dependencies[] = xmlsitemap_custom
+dependencies[] = xmlsitemap_engines
+dependencies[] = xmlsitemap_menu
+dependencies[] = xmlsitemap_node
+dependencies[] = xmlsitemap_taxonomy
+dependencies[] = ais
+dependencies[] = nodequeue
+dependencies[] = fe_nodequeue
+dependencies[] = fe_block
+dependencies[] = filefield_sources
+dependencies[] = manualcrop
+dependencies[] = strongarm
+dependencies[] = ds
+dependencies[] = ds_ui
+dependencies[] = link
+dependencies[] = flexslider
+dependencies[] = flexslider_views
+dependencies[] = boxes
+dependencies[] = context
+dependencies[] = context_ui
+dependencies[] = panels
+dependencies[] = panels_mini
+dependencies[] = php
+dependencies[] = jquery_colorpicker
+
+; Install features.
+;dependencies[] = front_page_slideshow
+;dependencies[] = disto
+;dependencies[] = install_contexts
+;dependencies[] = bsc_install
 
 ; Install contribs. (bundled)
 dependencies[] = advagg
 dependencies[] = css_emimage
 dependencies[] = filefield_nginx_progress
 dependencies[] = js
+dependencies[] = robotstxt
 dependencies[] = site_verify
 dependencies[] = speedy
 dependencies[] = views_content_cache
-dependencies[] = views_responsive_grid
-dependencies[] = wysiwyg
-dependencies[] = superfish
-dependencies[] = responsive_menus
-dependencies[] = adaptive_image
-dependencies[] = block_class
-dependencies[] = token
-dependencies[] = pathauto
-dependencies[] = imce
-dependencies[] = imce_wysiwyg
 
-
-; Install features
-dependencies[] = front_page_slideshow
-dependencies[] = disto
-dependencies[] = install_contexts
+; Install custom modules
+dependencies[] = bsc_theme_colors
 
 files[] = commerce_kickstart.profile
 
-; Information added by Drupal.org packaging script on 2014-07-18
-version = "7.x-1.27"
+; Information added by Drupal.org packaging script on 2014-08-07
+version = "7.x-1.29"
 core = "7.x"
 project = "commerce_kickstart"
-datestamp = "1405671528"
+datestamp = "1407401738"
 

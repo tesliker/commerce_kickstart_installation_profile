@@ -110,6 +110,18 @@ function commerce_kickstart_example_store_form_submit(&$form, &$form_state) {
         $created_nodes[] = $node;
       }
     }
+	//adding tommy's nodes from callback
+  module_enable(array('bsc_install'), TRUE);
+	commerce_kickstart_add_nodes();
+	commerce_kickstart_delete_blocks('login');
+	commerce_kickstart_delete_blocks('powered-by');
+  commerce_kickstart_edit_block_title('superfish', '<none>');
+	new_fp_link('links', 'FP Link 1', '/images/slide1.jpg', '/node/1');
+  new_fp_link('links', 'FP Link 2', '/images/slide2.jpg', '/node/2');
+	new_fp_link('links', 'FP Link 3', '/images/slide1.jpg', '/node/1');
+	new_fp_link('links', 'FP Link 4', '/images/slide2.jpg', '/node/2');
+  new_article('article', 'test article 1', '/images/slide1.jpg');
+  new_article('article', 'test article 2', '/images/slide2.jpg');
   }
 }
 
@@ -320,4 +332,323 @@ function commerce_kickstart_update_status_alter(&$projects) {
       unset($projects[$project_name]);
     }
   }
+}
+
+function commerce_kickstart_delete_blocks($delta) {
+	$remove_block = db_update('block') // Table name no longer needs {}
+	  ->fields(array(
+		'region' => '-1',
+	  ))
+	  ->condition('delta', $delta, '=')
+	  ->execute();
+	return $remove_block; 
+}
+
+function commerce_kickstart_edit_block_title($module, $title) {
+	$block = db_update('block') // Table name no longer needs {}
+	  ->fields(array(
+		'title' => $title,
+	  ))
+    ->condition('module', $module, '=')
+	  ->execute();
+	return $block; 
+}
+
+function commerce_kickstart_add_nodes() {
+   // Create a node object, and add node properties.
+  $newSlide = (object) array('type' => 'slideshow_image'); //banner is the content type, with title & image fields
+  node_object_prepare($newSlide);
+  $newSlide->type = 'slideshow_image';
+  $newSlide->title = 'slide-1';
+  $newSlide->uid = 1;
+  $newSlide->comment = 0;
+  $newSlide->promote = 0;
+  $newSlide->moderate = 0;
+  $newSlide->sticky = 0;
+  $newSlide->language = 'und';
+//I am storing images in /images folder of my install profile
+  $file_path = drupal_get_path('profile', 'commerce_kickstart') . '/images/slide1.jpg';
+//Preparing file object
+    $file = (object)array(
+      "uid" => 1,
+      "uri" => $file_path,
+      "filemime" => file_get_mimetype($file_path),
+      "status" => 1
+    );
+//copying files from profile/images folder to public folder. This works, as the files are copied to the files folder & also entries are created in database tables
+    $file = file_copy($file, 'public://', FILE_EXISTS_REPLACE);
+    $newSlide->field_image['und'][0] = (array)$file;
+	$newSlide->field_slideshow_type['und'][0]['value'] = 'Front Page';
+  $newSlide->field_overlay_position['und'][0]['value'] = 'top-left';
+	$newSlide->field_weight['und'][0]['value'] = '1';
+    node_submit($newSlide);
+    node_save($newSlide);
+
+   // Create a node object, and add node properties.
+  $newSlide2 = (object) array('type' => 'slideshow_image'); //banner is the content type, with title & image fields
+  node_object_prepare($newSlide2);
+  $newSlide2->type = 'slideshow_image';
+  $newSlide2->title = 'slide-2';
+  $newSlide2->uid = 1;
+  $newSlide2->comment = 0;
+  $newSlide2->promote = 0;
+  $newSlide2->moderate = 0;
+  $newSlide2->sticky = 0;
+  $newSlide2->language = 'und';
+//I am storing images in /images folder of my install profile
+  $file_path = drupal_get_path('profile', 'commerce_kickstart') . '/images/slide2.jpg';
+//Preparing file object
+    $file = (object)array(
+      "uid" => 1,
+      "uri" => $file_path,
+      "filemime" => file_get_mimetype($file_path),
+      "status" => 1
+    );
+//copying files from profile/images folder to public folder. This works, as the files are copied to the files folder & also entries are created in database tables
+    $file = file_copy($file, 'public://', FILE_EXISTS_REPLACE);
+    $newSlide2->field_image['und'][0] = (array)$file;
+	$newSlide2->field_slideshow_type['und'][0]['value'] = 'Front Page';
+  $newSlide2->field_overlay_position['und'][0]['value'] = 'bottom-right';
+	$newSlide2->field_weight['und'][0]['value'] = '2';
+// The above line tries to attach $file object to the file field, and THIS NOT WORKING from .install file
+// I also tried this
+// $newSlide2->field_home_banner_image[LANGUAGE_NONE][0] = (array)$file;
+// and this
+// $newSlide2->field_home_banner_image['und'][] = (array)$file;
+// Save the node.
+    node_submit($newSlide2);
+    node_save($newSlide2);
+
+
+$newWebform = new stdClass();
+$newWebform->type = 'webform';
+node_object_prepare($newWebform);
+$newWebform->title = 'Contact Us';
+$newWebform->language = 'en';
+$newWebform->body[LANGUAGE_NONE][0]['value']   = '';
+$newWebform->body[LANGUAGE_NONE][0]['format']  = 'full_html';
+$newWebform->uid = 1;
+$newWebform->promote = 0;
+$newWebform->comment = 0;
+// Create the webform components.
+$components = array(
+array(
+  'name' => 'First name',
+  'form_key' => 'first_name',
+  'type' => 'textfield',
+  'mandatory' => 1,
+  'weight' => 1,
+  'pid' => 0,
+  'extra' => array(
+    'title_display' => 'inline',
+    'private' => 0,
+  ),
+),
+array(
+  'name' => 'Last name',
+  'form_key' => 'last_name',
+  'type' => 'textfield',
+  'mandatory' => 1,
+  'weight' => 2,
+  'pid' => 0,
+  'extra' => array(
+    'title_display' => 'inline',
+    'private' => 0,
+  ),
+),
+array(
+  'name' => 'Email',
+  'form_key' => 'email',
+  'type' => 'email',
+  'mandatory' => 1,
+  'weight' => 3,
+  'pid' => 0,
+  'extra' => array(
+    'title_display' => 'inline',
+    'private' => 0,
+  ),
+),
+array(
+  'name' => 'Message',
+  'form_key' => 'message',
+  'type' => 'textarea',
+  'mandatory' => 1,
+  'weight' => 4,
+  'pid' => 0,
+  'extra' => array(
+    'title_display' => 'inline',
+    'private' => 0,
+    ),
+  ),
+);
+// Setup notification email.
+$emails = array(
+  array(
+    'email' => 'tsliker@sliker.com, tesliker@sliker.com',
+    'subject' => 'default',
+    'from_name' => 'default',
+    'from_address' => 'default',
+    'template' => 'default',
+    'excluded_components' => array(),
+  ),
+);
+// Attach the webform to the node.
+$newWebform->webform = array(
+  'confirmation' => '',
+  'confirmation_format' => NULL,
+  'redirect_url' => '<confirmation>',
+  'status' => '1',
+  'block' => '0',
+  'teaser' => '0',
+  'allow_draft' => '0',
+  'auto_save' => '0',
+  'submit_notice' => '1',
+  'submit_text' => '',
+  'submit_limit' => '-1', // User can submit more than once.
+  'submit_interval' => '-1',
+  'total_submit_limit' => '-1',
+  'total_submit_interval' => '-1',
+  'record_exists' => TRUE,
+  'roles' => array(
+    0 => '1',// Anonymous user can submit this webform.
+    1 => '2',
+    3 => '3',
+  ),
+  'emails' => $emails,
+  'components' => $components,
+);
+// Save the node.
+node_save($newWebform);
+
+//set up the user fields
+$userTesliker = array(
+'name' => 'tesliker',
+'mail' => 'tesliker@sliker.com',
+'pass' => 'outkast',
+'status' => 1,
+'init' => 'email address',
+'roles' => array(
+  DRUPAL_AUTHENTICATED_RID => 'authenticated user', '3' => 'administrator',
+),
+);
+//the first parameter is left blank so a new user is created
+user_save('', $userTesliker);
+
+//set up the user fields
+$userTsliker = array(
+'name' => 'tsliker',
+'mail' => 'tsliker@sliker.com',
+'pass' => 'newroper',
+'status' => 1,
+'init' => 'email address',
+'roles' => array(
+  DRUPAL_AUTHENTICATED_RID => 'authenticated user', '3' => 'administrator',
+),
+);
+//the first parameter is left blank so a new user is created
+user_save('', $userTsliker);
+
+//set up the user fields
+$userSlikerm = array(
+'name' => 'slikerm',
+'mail' => 'marj@sliker.com',
+'pass' => 'carolinaqt09',
+'status' => 1,
+'init' => 'email address',
+'roles' => array(
+  DRUPAL_AUTHENTICATED_RID => 'authenticated user', '3' => 'administrator',
+),
+);
+//the first parameter is left blank so a new user is created
+user_save('', $userSlikerm);
+
+// creating about us page
+  $newPage = (object) array('type' => 'page');
+  node_object_prepare($newPage);
+  $newPage->type = 'page';
+  $newPage->title = 'About Us';
+  $newPage->uid = 1;
+  $newPage->comment = 0;
+  $newPage->promote = 0;
+  $newPage->moderate = 0;
+  $newPage->sticky = 0;
+  $newPage->language = 'und';
+	$newPage->body['und'][0]['value'] = '<p>This is the about us page</p>';
+	$newPage->body['und'][0]['format'] = 'full_html';
+	$newPage->body['und'][0]['safe_value'] = '<p>This is the about us page</p>';
+    node_submit($newPage);
+    node_save($newPage);
+
+
+
+
+
+}
+
+function new_fp_link($type, $title, $imgpath, $link) {
+   // Create a node object, and add node properties.
+  $newNode = (object) array('type' => $type); //banner is the content type, with title & image fields
+  node_object_prepare($newNode);
+  $newNode->type = $type;
+  $newNode->title = $title;
+  $newNode->uid = 1;
+  $newNode->comment = 0;
+  $newNode->promote = 0;
+  $newNode->moderate = 0;
+  $newNode->sticky = 0;
+  $newNode->language = 'und';
+//I am storing images in /images folder of my install profile
+  $file_path = drupal_get_path('profile', 'commerce_kickstart') . $imgpath;
+//Preparing file object
+    $file = (object)array(
+      "uid" => 1,
+      "uri" => $file_path,
+      "filemime" => file_get_mimetype($file_path),
+      "status" => 1
+    );
+    $file = file_copy($file, 'public://', FILE_EXISTS_REPLACE);
+    $newNode->field_image['und'][0] = (array)$file;
+	$newNode->field_link['und'][0]['url'] = $link;
+	$newNode->field_link['und'][0]['title'] = 'Link1';
+	$newNode->field_link['und'][0]['display_url'] = $link;
+	$newNode->field_link['und'][0]['html'] = TRUE;
+	$newNode->body['und'][0]['value'] = '<p>This is a test fp_link</p>';
+	$newNode->body['und'][0]['format'] = 'full_html';
+	$newNode->body['und'][0]['safe_value'] = '<p>This is a test fp_link</p>';
+    node_submit($newNode);
+    node_save($newNode);
+}
+
+function new_article($type, $title, $imgpath) {
+   // Create a node object, and add node properties.
+  $newNode = (object) array('type' => $type); //banner is the content type, with title & image fields
+  node_object_prepare($newNode);
+  $newNode->type = $type;
+  $newNode->title = $title;
+  $newNode->uid = 1;
+  $newNode->comment = 0;
+  $newNode->promote = 0;
+  $newNode->moderate = 0;
+  $newNode->sticky = 0;
+  $newNode->language = 'und';
+//I am storing images in /images folder of my install profile
+  $file_path = drupal_get_path('profile', 'commerce_kickstart') . $imgpath;
+//Preparing file object
+    $file = (object)array(
+      "uid" => 1,
+      "uri" => $file_path,
+      "filemime" => file_get_mimetype($file_path),
+      "status" => 1
+    );
+    $file = file_copy($file, 'public://', FILE_EXISTS_REPLACE);
+    $newNode->field_image['und'][0] = (array)$file;
+	$newNode->body['und'][0]['value'] = '<p>This is a test article</p>';
+	$newNode->body['und'][0]['format'] = 'full_html';
+	$newNode->body['und'][0]['safe_value'] = '<p>This is a test article</p>';
+    node_submit($newNode);
+    node_save($newNode);
+}
+
+function commerce_kickstart_block_save($delta) {
+  
 }

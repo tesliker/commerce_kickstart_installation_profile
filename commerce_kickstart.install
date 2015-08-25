@@ -526,32 +526,6 @@ function _commerce_kickstart_install() {
 
   // Apply the shortcut set to the first user.
   shortcut_set_assign_user($set, (object) array('uid' => 1));
-  
-  // tesliker additions
-  // insert ckeditor on full_html profile
-  $nid = db_insert('wysiwyg') // Table name no longer needs {}
-  ->fields(array(
-    'format' => 'full_html',
-    'editor' => 'ckeditor',
-    'settings' => 'a:16:{s:7:"default";i:1;s:11:"user_choose";i:0;s:11:"show_toggle";i:1;s:5:"theme";s:0:"";s:8:"language";s:2:"en";s:7:"buttons";a:2:{s:7:"default";a:30:{s:4:"Bold";i:1;s:6:"Italic";i:1;s:9:"Underline";i:1;s:6:"Strike";i:1;s:11:"JustifyLeft";i:1;s:13:"JustifyCenter";i:1;s:12:"JustifyRight";i:1;s:12:"JustifyBlock";i:1;s:12:"BulletedList";i:1;s:12:"NumberedList";i:1;s:7:"Outdent";i:1;s:6:"Indent";i:1;s:4:"Undo";i:1;s:4:"Redo";i:1;s:4:"Link";i:1;s:6:"Unlink";i:1;s:6:"Anchor";i:1;s:5:"Image";i:1;s:11:"Superscript";i:1;s:10:"Blockquote";i:1;s:6:"Source";i:1;s:14:"HorizontalRule";i:1;s:3:"Cut";i:1;s:4:"Copy";i:1;s:5:"Paste";i:1;s:9:"PasteText";i:1;s:13:"PasteFromWord";i:1;s:6:"Format";i:1;s:5:"Table";i:1;s:9:"SelectAll";i:1;}s:4:"imce";a:1:{s:4:"imce";i:1;}}s:15:"toolbarLocation";s:3:"top";s:14:"resize_enabled";i:1;s:24:"default_toolbar_grouping";i:0;s:24:"simple_source_formatting";i:1;s:11:"css_setting";s:5:"theme";s:8:"css_path";s:0:"";s:9:"stylesSet";s:0:"";s:13:"block_formats";s:32:"p,address,pre,h2,h3,h4,h5,h6,div";s:20:"advanced__active_tab";s:11:"edit-output";s:21:"forcePasteAsPlainText";i:0;}'
-  ))
-  ->execute();
-  //jquery_update
-  variable_set('jquery_update_jquery_version', '1.7');
-  variable_set('jquery_update_jquery_admin_version', '1.5');
-  theme_enable(array('bootstrap'));
-  $enable = array(
-    'theme_default' => 'bootstrap_subtheme',
-    'admin_theme' => 'seven',
-    //'zen'
-  );
-  theme_enable($enable);
-  foreach ($enable as $var => $theme) {
-    if (!is_numeric($var)) {
-      variable_set($var, $theme);
-    }
-  }
-  theme_disable(array('bartik'));
-  
- /* variable_set('theme_bootstrap_subtheme_settings',  'a:64:{s:11:"toggle_logo";i:0;s:11:"toggle_name";i:0;s:13:"toggle_slogan";i:0;s:24:"toggle_node_user_picture";i:1;s:27:"toggle_comment_user_picture";i:1;s:32:"toggle_comment_user_verification";i:1;s:14:"toggle_favicon";i:1;s:16:"toggle_main_menu";i:0;s:21:"toggle_secondary_menu";i:0;s:12:"default_logo";i:1;s:9:"logo_path";s:0:"";s:11:"logo_upload";s:0:"";s:15:"default_favicon";i:1;s:12:"favicon_path";s:0:"";s:14:"favicon_upload";s:0:"";s:19:"general__active_tab";s:19:"edit-theme-settings";s:21:"bootstrap__active_tab";s:15:"edit-components";s:20:"bootstrap_breadcrumb";s:1:"1";s:25:"bootstrap_breadcrumb_home";i:0;s:26:"bootstrap_breadcrumb_title";i:1;s:25:"bootstrap_navbar_position";s:0:"";s:24:"bootstrap_navbar_inverse";i:0;s:37:"bootstrap_region_well-header_top_left";s:0:"";s:38:"bootstrap_region_well-header_top_right";s:0:"";s:35:"bootstrap_region_well-branding_left";s:0:"";s:36:"bootstrap_region_well-branding_right";s:0:"";s:32:"bootstrap_region_well-navigation";s:0:"";s:28:"bootstrap_region_well-header";s:0:"";s:33:"bootstrap_region_well-highlighted";s:0:"";s:26:"bootstrap_region_well-help";s:0:"";s:29:"bootstrap_region_well-content";s:0:"";s:35:"bootstrap_region_well-sidebar_first";s:4:"well";s:36:"bootstrap_region_well-sidebar_second";s:0:"";s:28:"bootstrap_region_well-footer";s:0:"";s:30:"bootstrap_region_well-page_top";s:0:"";s:33:"bootstrap_region_well-page_bottom";s:0:"";s:36:"bootstrap_region_well-dashboard_main";s:0:"";s:39:"bootstrap_region_well-dashboard_sidebar";s:0:"";s:40:"bootstrap_region_well-dashboard_inactive";s:0:"";s:21:"bootstrap_anchors_fix";i:1;s:34:"bootstrap_anchors_smooth_scrolling";i:1;s:25:"bootstrap_popover_enabled";i:1;s:27:"bootstrap_popover_animation";i:1;s:22:"bootstrap_popover_html";i:0;s:27:"bootstrap_popover_placement";s:5:"right";s:26:"bootstrap_popover_selector";s:0:"";s:25:"bootstrap_popover_trigger";a:4:{s:5:"click";s:5:"click";s:5:"hover";i:0;s:5:"focus";i:0;s:6:"manual";i:0;}s:23:"bootstrap_popover_title";s:0:"";s:25:"bootstrap_popover_content";s:0:"";s:23:"bootstrap_popover_delay";s:1:"0";s:27:"bootstrap_popover_container";s:4:"body";s:25:"bootstrap_tooltip_enabled";i:1;s:30:"bootstrap_tooltip_descriptions";i:1;s:27:"bootstrap_tooltip_animation";i:1;s:22:"bootstrap_tooltip_html";i:0;s:27:"bootstrap_tooltip_placement";s:9:"auto left";s:26:"bootstrap_tooltip_selector";s:0:"";s:25:"bootstrap_tooltip_trigger";a:4:{s:5:"hover";s:5:"hover";s:5:"focus";s:5:"focus";s:5:"click";i:0;s:6:"manual";i:0;}s:23:"bootstrap_tooltip_delay";s:1:"0";s:27:"bootstrap_tooltip_container";s:4:"body";s:13:"bootstrap_cdn";s:5:"3.0.2";s:20:"bootstrap_bootswatch";s:0:"";s:26:"bootstrap_rebuild_registry";i:0;s:29:"bootstrap_toggle_jquery_error";i:0;}');  */
-}
+
+} 
+
