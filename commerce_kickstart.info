@@ -9,7 +9,7 @@ version = 1.x-dev
 ; Developers can feel free to invert the comments below to install modules that
 ; aid in module development.
 ; dependencies[] = toolbar
-; dependencies[] = php
+dependencies[] = php
 ; dependencies[] = simpletest
 ; dependencies[] = devel
 dependencies[] = admin_menu
@@ -73,51 +73,44 @@ dependencies[] = commerce_tax_ui
 ; Install contribs.
 dependencies[] = adaptive_image
 dependencies[] = adminrole
+dependencies[] = ais
 dependencies[] = block_class
+dependencies[] = boxes
+dependencies[] = context
+dependencies[] = context_ui
+dependencies[] = ds
+dependencies[] = ds_ui
+dependencies[] = fe_block
+dependencies[] = fe_nodequeue
+dependencies[] = filefield_sources
+dependencies[] = flexslider
+dependencies[] = flexslider_views
 dependencies[] = imce
 dependencies[] = imce_wysiwyg
+dependencies[] = jquery_colorpicker
 dependencies[] = jquery_update
+dependencies[] = link
+dependencies[] = manualcrop
 dependencies[] = module_filter
+dependencies[] = nodequeue
+dependencies[] = panels
+dependencies[] = panels_mini
 dependencies[] = pathauto
 dependencies[] = responsive_menus
+dependencies[] = seo_checklist
+dependencies[] = strongarm
 dependencies[] = superfish
 dependencies[] = token
 dependencies[] = transliteration
 dependencies[] = views_responsive_grid
 dependencies[] = webform
 dependencies[] = wysiwyg
-dependencies[] = seo_checklist
 dependencies[] = xmlsitemap
 dependencies[] = xmlsitemap_custom
 dependencies[] = xmlsitemap_engines
 dependencies[] = xmlsitemap_menu
 dependencies[] = xmlsitemap_node
 dependencies[] = xmlsitemap_taxonomy
-dependencies[] = ais
-dependencies[] = nodequeue
-dependencies[] = fe_nodequeue
-dependencies[] = fe_block
-dependencies[] = filefield_sources
-dependencies[] = manualcrop
-dependencies[] = strongarm
-dependencies[] = ds
-dependencies[] = ds_ui
-dependencies[] = link
-dependencies[] = flexslider
-dependencies[] = flexslider_views
-dependencies[] = boxes
-dependencies[] = context
-dependencies[] = context_ui
-dependencies[] = panels
-dependencies[] = panels_mini
-dependencies[] = php
-dependencies[] = jquery_colorpicker
-
-; Install features.
-;dependencies[] = front_page_slideshow
-;dependencies[] = disto
-;dependencies[] = install_contexts
-;dependencies[] = bsc_install
 
 ; Install contribs. (bundled)
 dependencies[] = advagg
@@ -134,9 +127,9 @@ dependencies[] = bsc_theme_colors
 
 files[] = commerce_kickstart.profile
 
-; Information added by Drupal.org packaging script on 2014-08-07
-version = "7.x-1.29"
+; Information added by Drupal.org packaging script on 2015-05-08
+version = "7.x-1.37"
 core = "7.x"
 project = "commerce_kickstart"
-datestamp = "1407401738"
+datestamp = "1431126431"
 
